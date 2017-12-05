@@ -12,6 +12,5 @@ def anagram?(w1, w2)
   w1.chars.permutation.include?(w2.chars)
 end
 
-data = File.new("day4.txt").readlines().map { |s| s.split(" ").map(&:strip) }
+data = File.new('day4.txt').readlines.map { |s| s.split(' ').map(&:strip) }
 puts data.map(&method(:valid?)).count(true)
-

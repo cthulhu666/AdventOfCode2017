@@ -6,9 +6,7 @@ def captcha(s, step)
 end
 
 def next_el(list, idx, step)
-  if idx + step >= list.length
-    return list[(idx + step) % list.length]
-  end
+  return list[(idx + step) % list.length] if idx + step >= list.length
   list[idx + step]
 end
 

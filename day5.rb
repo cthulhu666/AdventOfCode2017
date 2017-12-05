@@ -12,8 +12,7 @@ def inc(data, pos, offset)
   end
 end
 
-
-data = File.new("day5.txt").readlines().map(&:strip).map(&:to_i)
+data = File.new('day5.txt').readlines.map(&:strip).map(&:to_i)
 
 # data = [0, 3, 0, 1, -3]
 puts walk(data, 0, 1)
