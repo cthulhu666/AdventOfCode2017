@@ -2,11 +2,13 @@ string = "5228833336355848549915459366737982598312959583817455621545976784792489
 numbers = [read [x] :: Int | x <- string]
 
 tuples :: [Int] -> Int -> [(Int, Int)]
-tuples arr n = zip arr (drop n (cycle arr))
+tuples xs n = zip xs ys
+  where ys = drop n (cycle xs)
 
 part1 = sum [ (fst p) | p <- tuples numbers 1, (fst p) == (snd p) ]
-part2 = sum [ (fst p) | p <- tuples numbers ((length string) `div` 2), (fst p) == (snd p) ]
+part2 = sum [ (fst p) | p <- tuples numbers n, (fst p) == (snd p) ]
+  where n = length string `div` 2
 
 main = do
-        print ("Part 1: " ++ show part1)
-        print ("Part 2: " ++ show part2)
+  print ("Part 1: " ++ show part1)
+  print ("Part 2: " ++ show part2)
