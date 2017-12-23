@@ -26,7 +26,13 @@ def cycle(depth)
 end
 
 def safe?(f, delay)
-  0.upto(f.keys.last).detect { |i| caught?(scanner_positions(f, i + delay), i) }.nil?
+  0.upto(f.keys.last).detect { |i| scanner_position(f, i, delay) == 0 }.nil?
+end
+
+def scanner_position(f, i, delay)
+  v = f[i]
+  return -1 if v.nil?
+  v[(i + delay) % v.length]
 end
 
 def init_firewall(depths)
@@ -41,7 +47,6 @@ def part1(depths)
   walk(depths)
 end
 
-# very slow, ~3min in my case
 def part2(depths)
   f = init_firewall(depths)
   0.upto(Float::INFINITY).detect do |i|
