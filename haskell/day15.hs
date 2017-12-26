@@ -21,12 +21,12 @@ pairs2 = zip (xs !! 0) (xs !! 1)
 
 gen (factor, startingValue) = iterate (next factor) startingValue
 
-gen2 (factor, startingValue, d) = filter (\x -> mod x d == 0) xs
+gen2 (factor, startingValue, d) = filter (\x -> rem x d == 0) xs
     where xs = gen (factor, startingValue)
 
-next factor x = mod (x * factor) divisor
+next factor x = rem (x * factor) divisor
 
-match (a, b) = mod a round2to16 == mod b round2to16
+match (a, b) = rem a round2to16 == rem b round2to16
 
 main = do
    print (part1 numberOfPairs)
