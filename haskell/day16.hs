@@ -1,16 +1,15 @@
 import qualified Data.Text as T
-import Data.Text.Read
 import Data.List
 
 -- TODO: use more proper data structure, [(Char, Int)] perhaps?
 -- dancers = zip ['a'..'p'] [0..]
 dancers = ['a'..'p']
 
-dance :: [([Char] -> [Char])] -> [Char] -> [Char]
-dance [] xs = xs
-dance moves xs = dance (tail moves) ys
-    where ys = head moves $ xs
+dance :: String -> [String -> String] -> String
+dance xs [] = xs
+dance xs (f:ys) = dance (f xs) ys
 
+parse :: T.Text -> String -> String
 parse s
     | cmd == 's' = spin arg
     | cmd == 'x' = exchange arg
@@ -19,19 +18,19 @@ parse s
     where cmd = T.head s
           arg = T.tail s
 
-spin :: T.Text -> [Char] -> [Char]
+spin :: T.Text -> String -> String
 spin x xs =
     snd ys ++ fst ys
     where ys = splitAt n xs
           n = (length xs) - (atoi x)
 
-exchange :: T.Text -> [Char] -> [Char]
+exchange :: T.Text -> String -> String
 exchange x xs = swap i j xs
     where [i, j] = [atoi s | s <- T.split (=='/') x]
 
-partner :: T.Text -> [Char] -> [Char]
+partner :: T.Text -> String -> String
 partner p xs = swap i j xs
-    where [Just i, Just j] = [ elemIndex e xs | e <- [ T.head s | s <- T.split (=='/') p]]
+    where [Just i, Just j] = [ elemIndex e xs | e <- [ T.head s | s <- T.split (=='/') p ]]
 
 -- https://stackoverflow.com/questions/30551033/swap-two-elements-in-a-list-by-its-indices
 swap f s xs = zipWith (\x y ->
@@ -39,11 +38,10 @@ swap f s xs = zipWith (\x y ->
     else if x == s then xs !! f
     else y) [0..] xs
 
-atoi :: Integral a => T.Text -> a
-atoi s = fst r
-    where (Right r) = decimal s
+atoi :: T.Text -> Int
+atoi s = read . T.unpack $ s
 
 main = do
    content <- readFile "day16.txt"
    let moves = map parse . map T.strip . T.split (==',') . T.pack $ content
-   print $ dance moves dancers
+   print $ dance dancers moves
