@@ -3,10 +3,10 @@ numbers = [read [x] :: Int | x <- string]
 
 tuples :: [Int] -> Int -> [(Int, Int)]
 tuples xs n = zip xs ys
-  where ys = drop n (cycle xs)
+  where ys = drop n $ cycle xs
 
-part1 = sum [ (fst p) | p <- tuples numbers 1, (fst p) == (snd p) ]
-part2 = sum [ (fst p) | p <- tuples numbers n, (fst p) == (snd p) ]
+part1 = sum [ fst p | p <- tuples numbers 1, fst p == snd p ]
+part2 = sum [ fst p | p <- tuples numbers n, fst p == snd p ]
   where n = length string `div` 2
 
 main = do
