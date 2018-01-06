@@ -21,7 +21,7 @@ spin :: String -> String -> String
 spin x xs =
     snd ys ++ fst ys
     where ys = splitAt n xs
-          n = (length xs) - (atoi x)
+          n = length xs - atoi x
 
 exchange :: String -> String -> String
 exchange x xs = swap i j xs
