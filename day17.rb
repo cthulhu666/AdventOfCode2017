@@ -6,7 +6,6 @@ def part1(n)
   buf = 1.upto(MAX).reduce([0]) do |a, i|
     pos = (pos + n) % a.length + 1
     a.insert(pos, i)
-    a
   end
   i = buf.index(MAX)
   buf[i + 1]
